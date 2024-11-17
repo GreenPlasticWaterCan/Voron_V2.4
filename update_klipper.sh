@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
 #This is a bash script to automatically update all MCU's. This needs to be changed to each specific printer. It also uses KCONFIG_CONFIG tha>
 
 #Stop klipper services
