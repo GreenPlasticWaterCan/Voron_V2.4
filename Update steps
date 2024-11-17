@@ -1,0 +1,27 @@
+Steps to updating Trident
+-sudo service klipper stop (stop klipper)
+
+Update MCU:
+first flashing: make menuconfig KCONFIG_CONFIG=config.mcu (make menuconfig using the main controller presets, only need to be done the first time)
+-make clean KCONFIG_CONFIG=config.mcu
+
+-make KCONFIG_CONFIG=config.mcu(make firmware using config.mcu presets)
+
+-python3 ~/katapult/scripts/flashtool.py -f ~/klipper/out/klipper.bin -d /dev/serial/by-id/usb-Klipper_stm32f446xx_14001F001750535556323420-if00 (flash over USB)
+
+alternative: -make flash KCONFIG_CONFIG=config.mcu FLASH_DEVICE=/dev/serial/by-id/usb-Klipper_stm32f446xx_14001F001750535556323420-if00
+
+Update toolhead:
+-first flashing: make menuconfig KCONFIG_CONFIG=config.toolhead (make menuconfig using the toolhead presets)
+
+-make clean KCONFIG_CONFIG=config.toolhead
+
+-make KCONFIG_CONFIG=config.toolhead (make config using config.toolhead presets)
+
+-python3 ~/katapult/scripts/flashtool.py -i can0 -u 739d4f6f9353 -r (Put Toolhead into bootloader/katapult)
+
+-python3 ~/katapult/scripts/flashtool.py -q (query CANbus UUID)
+
+-python3 ~/katapult/scripts/flashtool.py -i can0 -u 739d4f6f9353 -f ~/klipper/out/klipper.bin (flash firmware over CANbus)
+
+-Sudo service klipper start (start klipper)
